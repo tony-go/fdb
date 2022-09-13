@@ -120,4 +120,30 @@ mod cli_tests {
         assert!(error.is_err());
         clean();
     }
+
+    #[test]
+    fn retrieve_the_last_insert() {
+        let key = "foo";
+        let last_value = "zoo";
+
+        run(TEST_FILE, "insert", key, Some("bar")).expect("Impossible to insert foo: bar");
+        run(TEST_FILE, "insert", key, Some(last_value)).expect("Impossible to insert last_value");
+        let res = run(TEST_FILE, "get", key, None).expect("Impossible to get foo.");
+
+        assert_eq!(res, last_value);
+        clean();
+    }
+
+    #[test]
+    fn update_existing_value() {
+        let key = "foo";
+        let last_value = "zoo";
+
+        run(TEST_FILE, "insert", key, Some("bar")).expect("Impossible to insert foo: bar");
+        run(TEST_FILE, "update", key, Some(last_value)).expect("Impossible to insert last_value");
+        let res = run(TEST_FILE, "get", key, None).expect("Impossible to get foo.");
+
+        assert_eq!(res, last_value);
+        clean();
+    }
 }
