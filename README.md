@@ -1,6 +1,6 @@
 # fdb
 
-Fdb is an _append log only_ key value store written in Rust.
+Fdb is an _append-only log_, key value store written in Rust.
 
 Written in the context of "Rust In Action" book.
 
