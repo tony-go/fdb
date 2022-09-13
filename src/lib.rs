@@ -9,8 +9,8 @@ use crc::crc32;
 use serde::{Deserialize, Serialize};
 
 // types
-type ByteString = Vec<u8>;
-type ByteStr = [u8];
+pub type ByteString = Vec<u8>;
+pub type ByteStr = [u8];
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct KeyValuePair {
@@ -99,7 +99,11 @@ impl Fdb {
 
         let kv = self.get_at(pos)?;
 
-        Ok(Some(kv.value))
+        if kv.value.len() > 0 {
+            Ok(Some(kv.value))
+        } else {
+            Ok(None)
+        }
     }
 
     fn get_at(&mut self, pos: u64) -> Result<KeyValuePair> {
